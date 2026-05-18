@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { ChartPanel } from './ChartPanel';
@@ -29,7 +30,8 @@ function DonutLegend({ slices, colors }) {
             }}
           />
           <span>
-            {slice.name}: <strong>{slice.y.toFixed(2)}%</strong>
+            {slice.name?.trim() ? `${slice.name}: ` : null}
+            <strong>{slice.y.toFixed(2)}%</strong>
           </span>
         </Box>
       ))}
@@ -37,7 +39,7 @@ function DonutLegend({ slices, colors }) {
   );
 }
 
-export function DonutChart({ title, slices, variant = 'tile', colors }) {
+export function DonutChart({ title, slices, variant = 'tile', colors, showInfoIcon = false }) {
   const pieSize = PIE_SIZE[variant] || PIE_SIZE.tile;
   const chartColors = sliceColors(slices, colors);
   const isCompact = variant === 'compact';
@@ -77,8 +79,28 @@ export function DonutChart({ title, slices, variant = 'tile', colors }) {
     [title, slices, pieSize, chartColors]
   );
 
+  const titleNode = title ? (
+    showInfoIcon ? (
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5, mb: 1 }}>
+        <Typography
+          sx={{
+            fontSize: 14,
+            fontWeight: 600,
+            color: '#1E232E',
+            textAlign: 'center',
+          }}
+        >
+          {title}
+        </Typography>
+        <InfoOutlinedIcon sx={{ fontSize: 16, color: '#6b7280' }} aria-hidden />
+      </Box>
+    ) : (
+      title
+    )
+  ) : null;
+
   return (
-    <ChartPanel title={title} minHeight={isCompact ? 240 : 320}>
+    <ChartPanel title={titleNode} minHeight={isCompact ? 240 : 320}>
       <Box
         sx={{
           display: 'flex',

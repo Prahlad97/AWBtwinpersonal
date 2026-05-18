@@ -4,11 +4,14 @@ import { PremiseDashboard } from './PremiseDashboard';
 import { ApplianceTargetingDashboard } from './ApplianceTargetingDashboard';
 import { LoadResearchDashboard } from './LoadResearchDashboard';
 import { PlaceholderDashboard } from './PlaceholderDashboard';
-import { getTabByRoute } from '../config/tabs';
+import { CustomDashboardView } from './CustomDashboardView';
+import { getTabByRoute, getSubtab } from '../config/tabs';
 
 export function DashboardRouter() {
-  const { tab } = useParams();
+  const { tab, subtab } = useParams();
   const tabConfig = getTabByRoute(tab);
+  const currentSub = getSubtab(tabConfig, subtab);
+  const subId = currentSub?.id || 'HOME';
 
   switch (tabConfig.id) {
     case 'ACCOUNT':
@@ -26,7 +29,7 @@ export function DashboardRouter() {
     case 'GRID_ASSETS':
       return <PlaceholderDashboard tabName="Grid Asset" tileCount={3} />;
     case 'CUSTOM':
-      return <PlaceholderDashboard tabName="Custom" tileCount={2} />;
+      return <CustomDashboardView subId={subId} />;
     default:
       return <AccountDashboard />;
   }

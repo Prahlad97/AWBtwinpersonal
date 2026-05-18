@@ -11,6 +11,7 @@ export function BarChart({
   categories,
   values,
   yAxisTitle,
+  xAxisTitle,
   color = '#1e3a5f',
   colors,
   valueSuffix = '',
@@ -48,6 +49,7 @@ export function BarChart({
         : {
             xAxis: {
               categories,
+              title: xAxisTitle ? { text: xAxisTitle, style: { fontSize: '11px' } } : undefined,
               labels: {
                 rotation: categories.length > 8 ? -35 : 0,
                 style: { fontSize: '10px' },
@@ -90,7 +92,7 @@ export function BarChart({
       },
       series: [{ name: title, data: values }],
     }),
-    [title, categories, values, yAxisTitle, color, colors, multi, fill, valueSuffix, labelColor, height, horizontal, chartType]
+    [title, categories, values, yAxisTitle, xAxisTitle, color, colors, multi, fill, valueSuffix, labelColor, height, horizontal, chartType]
   );
 
   return (

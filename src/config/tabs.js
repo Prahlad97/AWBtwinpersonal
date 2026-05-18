@@ -18,7 +18,7 @@ export const ANALYTICS_TABS = [
     { id: 'PROGRAM_SIMULATION', name: 'Program Simulation', route: 'program-simulation' },
   ]},
   { id: 'EV_ANALYTICS', name: 'EV Analytics', route: 'ev-analytics', subtabs: [
-    /** Non-empty route so Home (`/dashboards/ev-analytics`) ≠ first sub-tab URL (clickable home). */
+    { id: 'HOME', name: 'Home', route: '' },
     { id: 'CHARGING_BEHAVIOR', name: 'EV Charging Behavior', route: 'charging-behavior' },
     { id: 'EV_ADOPTION', name: 'EV Adoption', route: 'ev-adoption' },
     { id: 'EV_GRID_IMPACT', name: 'EV Grid Impact', route: 'ev-grid-impact' },
@@ -27,6 +27,7 @@ export const ANALYTICS_TABS = [
     { id: 'HOME', name: 'Home', route: '' },
     { id: 'GRID_PEAK', name: 'Grid Peak', route: 'grid-peak' },
     { id: 'ASSETS', name: 'Assets', route: 'assets' },
+    { id: 'NWA', name: 'NWA', route: 'nwa' },
   ]},
   { id: 'CUSTOM', name: 'Custom', route: 'custom', subtabs: [
     { id: 'HOME', name: 'Home', route: '' },

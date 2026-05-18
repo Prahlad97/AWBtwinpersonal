@@ -13,19 +13,23 @@ export function ChartPanel({ title, children, minHeight = 320 }) {
         height: '100%',
       }}
     >
-      {title ? (
-        <Typography
-          sx={{
-            fontSize: 14,
-            fontWeight: 600,
-            color: '#1E232E',
-            textAlign: 'center',
-            mb: 1,
-          }}
-        >
-          {title}
-        </Typography>
-      ) : null}
+      {title
+        ? typeof title === 'string' ? (
+            <Typography
+              sx={{
+                fontSize: 14,
+                fontWeight: 600,
+                color: '#1E232E',
+                textAlign: 'center',
+                mb: 1,
+              }}
+            >
+              {title}
+            </Typography>
+          ) : (
+            title
+          )
+        : null}
       {children}
     </Box>
   );

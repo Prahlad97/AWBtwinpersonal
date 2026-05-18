@@ -12,6 +12,8 @@ import { StackedBarChart } from '../components/charts/StackedBarChart';
 import { ComboChart } from '../components/charts/ComboChart';
 import { ChartLegendStrip } from '../components/charts/ChartLegendStrip';
 import { EvAnalyticsView } from './EvAnalyticsView';
+import { GridAssetsView } from './GridAssetsView';
+import { CustomDashboardView } from './CustomDashboardView';
 import {
   annualClusterDonut,
   APPLIANCE_TOOLBAR_LEGEND,
@@ -251,6 +253,12 @@ export function DashboardContent() {
       break;
     case 'EV_ANALYTICS':
       body = <EvAnalyticsView subId={subId} />;
+      break;
+    case 'GRID_ASSETS':
+      body = <GridAssetsView subId={subId} />;
+      break;
+    case 'CUSTOM':
+      body = <CustomDashboardView subId={subId} />;
       break;
     default:
       body = <PlaceholderTab tabName={currentTab.name} />;

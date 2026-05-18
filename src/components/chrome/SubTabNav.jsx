@@ -32,7 +32,8 @@ export function SubTabNav() {
   if (extraSubtabs.length === 0) return null;
 
   const activeSub = getSubtab(current, subtab);
-  const homeActive = activeSub?.id === 'HOME';
+  /** Index route (`/dashboards/:tab`) is home when a `HOME` subtab exists. */
+  const homeActive = activeSub?.id === 'HOME' || (!subtab && current.subtabs.some((s) => s.id === 'HOME'));
 
   return (
     <Box

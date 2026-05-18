@@ -444,6 +444,7 @@ function buildEvChargingHeatmapData() {
 export const evChargingFrequencyBars = {
   title: 'EV Charging Frequency',
   yAxisTitle: 'Number of EV Owners',
+  xAxisTitle: 'Median Charging Sessions per Week',
   categories: ['1', '2', '3', '4', '5', '6', '7', '8'],
   values: [18, 142, 96, 72, 48, 31, 22, 14],
   color: EV_CHART_COLORS.fill,
@@ -453,6 +454,7 @@ export const evChargingFrequencyBars = {
 export const evChargingDurationBars = {
   title: 'EV Charging Duration Histogram',
   yAxisTitle: 'Number of EV Owners',
+  xAxisTitle: 'Median Weekly Charging Duration (Hrs)',
   categories: [
     '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21 or Above',
   ],
@@ -468,14 +470,7 @@ export const evChargingHeatmap = {
   data: buildEvChargingHeatmapData(),
 };
 
-export const evAdoptionByZip = {
-  title: 'EV Adoption',
-  yAxisTitle: 'No. of EVs',
-  categories: ['99203', '99208', '99223', '99205', '99204', '99202', '99224', '99207', '99217', '99206', '99201', '99218'],
-  values: [13, 13, 13, 12, 11, 11, 10, 10, 9, 9, 8, 8],
-  color: EV_CHART_COLORS.fill,
-  labelColor: EV_CHART_COLORS.label,
-};
+export { evAdoptionByZip, EV_ADOPTION_DATASETS, EV_ADOPTION_CHART_META } from './evAdoption';
 
 export const evHourlyConsumptionBars = {
   title: 'Total EV Consumption (Right click on the chart to drill down)',
@@ -504,12 +499,7 @@ export const evChargerAmplitudeBars = {
   labelColor: EV_CHART_COLORS.label,
 };
 
-export const evGridImpactTableRows = [
-  { asset: 'Feeder 13 kV', peakHour: '19:00', capacityMw: 4.97, totalEvs: 21, consumptionMwh: 15.01, maxMwh: 2.84, penetration: 20.5, utilizationPct: 72 },
-  { asset: 'Line 115 kV', peakHour: '21:00', capacityMw: 24.1, totalEvs: 12, consumptionMwh: 8.42, maxMwh: 1.92, penetration: 15.4, utilizationPct: 88 },
-  { asset: 'Switchyard 115 kV', peakHour: '7:00', capacityMw: 18.6, totalEvs: 8, consumptionMwh: 5.11, maxMwh: 1.05, penetration: 12.1, utilizationPct: 54 },
-  { asset: 'Substation A', peakHour: '18:00', capacityMw: 9.2, totalEvs: 14, consumptionMwh: 6.78, maxMwh: 1.41, penetration: 18.2, utilizationPct: 91 },
-];
+export { EV_GRID_IMPACT_DATASETS, EV_GRID_IMPACT_VIEW_OPTIONS } from './evGridImpact';
 
 function expandSeriesData(data, length, factor = 1) {
   return Array.from({ length }, (_, i) =>
@@ -572,6 +562,16 @@ export const consumptionHistogramBars = {
   color: LOAD_RESEARCH_BAR,
   labelColor: '#1E232E',
 };
+
+export {
+  CUSTOM_HOME_CHART_TITLES,
+  CUSTOM_HOME_COLORS,
+  customHomeOverviewColors,
+  customHomeOverviewSlices,
+  customUploadCharts,
+  customUploadChartsDefaultId,
+  UPLOAD_CHART_COLORS,
+} from './customCharts';
 
 /** Placeholder tiles for tabs without full fixture sets yet */
 export const placeholderDonut = (title) => ({
