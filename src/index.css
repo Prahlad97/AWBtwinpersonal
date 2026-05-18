@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  color: #1e232e;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
