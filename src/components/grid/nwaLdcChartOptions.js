@@ -1,7 +1,7 @@
 import { HOURS_8760 } from '../../fixtures/gridNwa8760';
 
 /** Zoom/pinch for load-duration (rank-ordered) charts on linear hour index. */
-export function nwaLdcChartBase(height, onRangeChange) {
+export function nwaLdcChartBase(height, onRangeChange, onChartLoad) {
   return {
     height,
     backgroundColor: 'transparent',
@@ -26,6 +26,7 @@ export function nwaLdcChartBase(height, onRangeChange) {
     events: {
       load() {
         applyLdcAxisGranularity(this.xAxis[0], onRangeChange);
+        onChartLoad?.();
       },
     },
   };

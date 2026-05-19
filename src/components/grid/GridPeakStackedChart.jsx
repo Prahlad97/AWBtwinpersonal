@@ -12,7 +12,7 @@ import {
 } from './nwaLdcChartOptions';
 import { NWA_SERIES_PERF } from './nwaChartOptions';
 
-export function GridPeakStackedChart({ height = 340 }) {
+export function GridPeakStackedChart({ height = 340, onChartLoad }) {
   const [zoomCaption, setZoomCaption] = useState(null);
   const ldc = GRID_PEAK_LDC;
   const yMin = Math.floor(Math.min(0, ...ldc.layers.solar) - 2);
@@ -31,7 +31,7 @@ export function GridPeakStackedChart({ height = 340 }) {
     }));
 
     return {
-      chart: nwaLdcChartBase(height, setZoomCaption),
+      chart: nwaLdcChartBase(height, setZoomCaption, onChartLoad),
       credits: { enabled: false },
       title: { text: null },
       exporting: { enabled: false },

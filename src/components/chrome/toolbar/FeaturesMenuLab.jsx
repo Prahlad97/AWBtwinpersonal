@@ -1,7 +1,9 @@
 import { Box, Menu, MenuItem, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import downloadIcon from '../../../assets/images/download-csv.svg';
 import printIcon from '../../../assets/images/print-pdf.svg';
 import uploadIcon from '../../../assets/images/upload-csv.svg';
+import analyticsIcon from '../../../assets/images/analytics_tab.svg';
 
 const paperSx = {
   maxWidth: 367,
@@ -24,9 +26,15 @@ const itemSx = {
 /** Production: `FeaturesMenu` + `FeaturesList` — hamburger opens icon + title + description rows. */
 export function FeaturesMenuLab({ anchorEl, open, onClose }) {
   const features = [
-    { icon: downloadIcon, title: 'Download', description: 'Download dashboard data as CSV' },
-    { icon: printIcon, title: 'Print', description: 'Print dashboard as PDF' },
-    { icon: uploadIcon, title: 'Upload CSV', description: 'Upload a CSV file' },
+    {
+      icon: analyticsIcon,
+      title: 'Demand curve comparison',
+      description: 'Compare hourly load shapes across segments',
+      to: '/comparisons',
+    },
+    { icon: downloadIcon, title: 'Download', description: 'Download dashboard data as CSV', onClick: onClose },
+    { icon: printIcon, title: 'Print', description: 'Print dashboard as PDF', onClick: onClose },
+    { icon: uploadIcon, title: 'Upload CSV', description: 'Upload a CSV file', onClick: onClose },
   ];
 
   return (
@@ -40,7 +48,15 @@ export function FeaturesMenuLab({ anchorEl, open, onClose }) {
     >
       {features.map((f, i) => (
         <Box key={f.title}>
-          <MenuItem onClick={onClose} sx={itemSx}>
+          <MenuItem
+            component={f.to ? Link : 'li'}
+            to={f.to}
+            onClick={() => {
+              f.onClick?.();
+              onClose();
+            }}
+            sx={itemSx}
+          >
             <Box component="img" src={f.icon} alt="" sx={{ width: 20, height: 20, mt: 0.25, flexShrink: 0 }} />
             <Box>
               <Typography sx={{ fontSize: 16, fontWeight: 500, color: '#3A4245', fontFamily: 'Roboto, sans-serif', lineHeight: '20px' }}>

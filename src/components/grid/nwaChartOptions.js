@@ -39,7 +39,7 @@ export function applyXAxisGranularity(axis, onRangeChange) {
 }
 
 /** Shared Highcharts options for zoomable 8760 hourly series. */
-export function nwa8760ChartBase(height, onRangeChange) {
+export function nwa8760ChartBase(height, onRangeChange, onChartLoad) {
   return {
     height,
     backgroundColor: 'transparent',
@@ -72,6 +72,7 @@ export function nwa8760ChartBase(height, onRangeChange) {
     events: {
       load() {
         applyXAxisGranularity(this.xAxis[0], onRangeChange);
+        onChartLoad?.();
       },
     },
   };

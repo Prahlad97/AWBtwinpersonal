@@ -14,14 +14,14 @@ import { NWA_SERIES_PERF } from './nwaChartOptions';
 
 const PEAK_FILL = '#5B8DEF';
 
-export function GridPeakDemandChart({ height = 340 }) {
+export function GridPeakDemandChart({ height = 340, onChartLoad }) {
   const [zoomCaption, setZoomCaption] = useState(null);
   const ldc = GRID_PEAK_LDC;
   const yMax = Math.ceil(Math.max(...ldc.values) * 1.05);
 
   const options = useMemo(
     () => ({
-      chart: nwaLdcChartBase(height, setZoomCaption),
+      chart: nwaLdcChartBase(height, setZoomCaption, onChartLoad),
       credits: { enabled: false },
       title: { text: null },
       exporting: { enabled: false },

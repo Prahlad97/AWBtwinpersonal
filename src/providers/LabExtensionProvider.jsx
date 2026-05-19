@@ -42,8 +42,18 @@ export function LabExtensionProvider({ children }) {
       pilotId: 1,
       currentExplore: 'awb_common',
       isAwbNUJ: true,
+      isAwbV2: true,
       /** Production KPI uses solar-aware tooltip copy in consumption popover */
       isSolarAvailable: true,
+      allowedPilotName: 'demo',
+      allowedPilotIds: [1],
+      userInfo: {
+        id: 'lab-user-1',
+        first_name: 'Alex',
+        last_name: 'Morgan',
+        email: 'lab@bidgely.com',
+      },
+      userAttributeIds: {},
     }),
     [lookerFilters, isDashboardLoading, fromlookercache]
   );

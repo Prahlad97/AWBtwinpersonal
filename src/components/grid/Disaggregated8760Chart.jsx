@@ -10,7 +10,7 @@ function toSeriesData(timestamps, values) {
   return timestamps.map((t, i) => [t, values[i]]);
 }
 
-export function Disaggregated8760Chart({ tempScale = 'C', height = 340 }) {
+export function Disaggregated8760Chart({ tempScale = 'C', height = 340, onChartLoad }) {
   const [zoomCaption, setZoomCaption] = useState(null);
 
   const options = useMemo(() => {
@@ -35,7 +35,7 @@ export function Disaggregated8760Chart({ tempScale = 'C', height = 340 }) {
     }));
 
     return {
-      chart: nwa8760ChartBase(height, setZoomCaption),
+      chart: nwa8760ChartBase(height, setZoomCaption, onChartLoad),
       credits: { enabled: false },
       title: { text: null },
       exporting: { enabled: false },
@@ -89,7 +89,7 @@ export function Disaggregated8760Chart({ tempScale = 'C', height = 340 }) {
         },
       ],
     };
-  }, [tempScale, height]);
+  }, [tempScale, height, onChartLoad]);
 
   return (
     <ChartPanel title="8760 Disaggregated Demand Curve (Total Demand)" minHeight={height + 56}>

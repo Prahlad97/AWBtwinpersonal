@@ -1,0 +1,4 @@
+export const SEGMENT_TYPES = {
+  BIDGELY: 'BIDGELY',
+  PROGRAM: 'PROGRAM',
+};

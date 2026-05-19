@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import { getSubtab, getTabByRoute } from '../config/tabs';
-import { MAP_VIEW } from '../config/mapView';
+import { defaultMapViewForTab } from '../config/mapView';
+import { LocationView } from './LocationView';
 import { useMapView } from '../context/MapViewContext';
 import { MapSplitLayout } from '../components/map/MapSplitLayout';
 import { DashboardGrid } from '../components/charts/ChartPanel';
@@ -12,7 +13,11 @@ import { StackedBarChart } from '../components/charts/StackedBarChart';
 import { ComboChart } from '../components/charts/ComboChart';
 import { ChartLegendStrip } from '../components/charts/ChartLegendStrip';
 import { EvAnalyticsView } from './EvAnalyticsView';
-import { GridAssetsView } from './GridAssetsView';
+import { GridAssetsLoadingPanel } from '../components/grid/GridAssetsLoadingPanel';
+
+const GridAssetsView = lazy(() =>
+  import('./GridAssetsView').then((m) => ({ default: m.GridAssetsView }))
+);
 import { CustomDashboardView } from './CustomDashboardView';
 import {
   annualClusterDonut,
@@ -234,7 +239,7 @@ export function DashboardContent() {
   const { actions: mapActions } = useMapView();
 
   useEffect(() => {
-    mapActions.setView(MAP_VIEW.ANALYSIS);
+    mapActions.setView(defaultMapViewForTab(currentTab.id));
   }, [currentTab.id, mapActions]);
 
   let body = null;
@@ -255,10 +260,17 @@ export function DashboardContent() {
       body = <EvAnalyticsView subId={subId} />;
       break;
     case 'GRID_ASSETS':
-      body = <GridAssetsView subId={subId} />;
+      body = (
+        <Suspense fallback={<GridAssetsLoadingPanel subId={subId} />}>
+          <GridAssetsView subId={subId} />
+        </Suspense>
+      );
       break;
     case 'CUSTOM':
       body = <CustomDashboardView subId={subId} />;
+      break;
+    case 'LOCATION':
+      body = <LocationView subId={subId} />;
       break;
     default:
       body = <PlaceholderTab tabName={currentTab.name} />;

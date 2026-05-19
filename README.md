@@ -7,10 +7,15 @@ Standalone sandbox for **Bidgely Analytics** dashboard UI. Pixel-close to prepro
 ```bash
 cd analytics-lab
 npm install
+cp .env.example .env   # add your Mapbox public token
 npm run dev
 ```
 
 Open **http://localhost:3001** (defaults to `/dashboards/account`).
+
+### Mapbox (Location tab)
+
+Set `VITE_MAPBOX_ACCESS_TOKEN` in `.env` (public `pk.` token). Restart Vite after changing env vars. The Location tab opens in **map view** with zip-level fixture polygons for Home, EV Maps, Income, and Grid Map subtabs.
 
 ## Stack
 
@@ -36,20 +41,28 @@ Open **http://localhost:3001** (defaults to `/dashboards/account`).
 | EV Analytics | `/dashboards/ev-analytics` |
 | Grid Asset | `/dashboards/grid-assets` |
 | Custom | `/dashboards/custom` |
+| Demand curve comparison (list) | `/comparisons` |
+| Demand curve comparison (detail) | `/comparisons/:dccId` |
+
+Open DCC from the analytics **features (hamburger) menu** → “Demand curve comparison”, or go directly to `/comparisons`. Comparisons persist in `sessionStorage` (`analytics-lab-dcc-domains-v2`) for the browser session (fixture seed on first load).
 
 ## Architecture
 
 ```
 src/
-  fixtures/          # Static JSON-like exports (KPI + chart data)
-  components/
-    chrome/          # Header, KPIs, tabs, filters
-    charts/          # Donut, Bar, Stacked, Combo
-  views/             # Per-tab dashboard layouts
-  layouts/           # Analytics shell
-  context/           # Filter state (UI wired; data filtering TBD)
-  config/tabs.js     # Tab + subtab definitions
+  chrome/awb/dcc/       # Vendored production DCC UI (@dcc) — pixel parity with preprod
+  lab-host/             # @ alias: context mocks, Looker stubs, labDccStore adapter
+  dcc/DccLabProviders.jsx
+  fixtures/             # Dashboard chart/KPI fixtures
+  components/chrome/    # Lab shell (header, tabs, filters)
+  views/                # Per-tab dashboard layouts
+  layouts/
+  context/              # Filter state (UI wired; data filtering TBD)
 ```
+
+**DCC data boundary:** UI hooks call `comparison-service` → `demand-curve-api.js` → `lab-host/adapters/labDccStore.js` (domain-shaped fixtures, no AWB API). Compare uses pre-seeded hourly series in the store unless Looker is wired later.
+
+Vite aliases: `@` → `lab-host`, `@dcc` → `chrome/awb/dcc`, `@/assets` → `src/assets` (order matters).
 
 ## Filters
 

@@ -19,3 +19,8 @@ export const MAP_VIEW = {
 export function tabSupportsMapView(tabId) {
   return TAB_IDS_WITH_MAP_VIEW.includes(tabId);
 }
+
+/** Location tab defaults to full map per Figma. */
+export function defaultMapViewForTab(tabId) {
+  return tabId === 'LOCATION' ? MAP_VIEW.MAP : MAP_VIEW.ANALYSIS;
+}

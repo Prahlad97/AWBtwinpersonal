@@ -10,7 +10,7 @@ function toSeriesData(timestamps, values) {
   return timestamps.map((t, i) => [t, values[i]]);
 }
 
-export function Gross8760Chart({ tempScale = 'C', height = 340 }) {
+export function Gross8760Chart({ tempScale = 'C', height = 340, onChartLoad }) {
   const [zoomCaption, setZoomCaption] = useState(null);
 
   const options = useMemo(() => {
@@ -22,7 +22,7 @@ export function Gross8760Chart({ tempScale = 'C', height = 340 }) {
     const tempTitle = tempScale === 'F' ? '°F' : '°C';
 
     return {
-      chart: nwa8760ChartBase(height, setZoomCaption),
+      chart: nwa8760ChartBase(height, setZoomCaption, onChartLoad),
       credits: { enabled: false },
       title: { text: null },
       exporting: { enabled: false },
@@ -78,7 +78,7 @@ export function Gross8760Chart({ tempScale = 'C', height = 340 }) {
         },
       ],
     };
-  }, [tempScale, height]);
+  }, [tempScale, height, onChartLoad]);
 
   return (
     <ChartPanel title="8760 Demand Chart (Total Usage)" minHeight={height + 56}>

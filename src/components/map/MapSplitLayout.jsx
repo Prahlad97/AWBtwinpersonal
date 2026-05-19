@@ -1,8 +1,9 @@
 import { Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { getTabByRoute } from '../../config/tabs';
+import { getSubtab, getTabByRoute } from '../../config/tabs';
 import { MAP_VIEW, tabSupportsMapView } from '../../config/mapView';
 import { useMapView } from '../../context/MapViewContext';
+import { LocationMapPanel } from '../location/LocationMapPanel';
 import { MapPlaceholder } from './MapPlaceholder';
 
 /** Production split/map layout from `embed-dashboard-nuj.js` (loadResearch* classes). */
@@ -62,9 +63,12 @@ const mapOnlyInnerSx = {
 };
 
 export function MapSplitLayout({ children }) {
-  const { tab } = useParams();
+  const { tab, subtab } = useParams();
   const currentTab = getTabByRoute(tab);
+  const currentSub = getSubtab(currentTab, subtab);
+  const subId = currentSub?.id || 'HOME';
   const { state } = useMapView();
+  const isLocation = currentTab.id === 'LOCATION';
 
   if (!tabSupportsMapView(currentTab.id)) {
     return children;
@@ -78,7 +82,7 @@ export function MapSplitLayout({ children }) {
     return (
       <Box sx={mapOnlyRootSx}>
         <Box sx={mapOnlyInnerSx}>
-          <MapPlaceholder fullHeight />
+          {isLocation ? <LocationMapPanel subId={subId} fullHeight /> : children || <MapPlaceholder fullHeight />}
         </Box>
       </Box>
     );
@@ -89,7 +93,7 @@ export function MapSplitLayout({ children }) {
       <Box sx={splitRootSx}>
         <Box sx={chartsPanelSx}>{children}</Box>
         <Box sx={mapPanelSx}>
-          <MapPlaceholder />
+          {isLocation ? <LocationMapPanel subId={subId} /> : <MapPlaceholder />}
         </Box>
       </Box>
     );
